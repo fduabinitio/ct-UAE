@@ -1,0 +1,45 @@
+# generated using pymatgen
+data_CaNd2Ti2Mn2O12
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   5.37214000
+_cell_length_b   5.43897452
+_cell_length_c   7.67297569
+_cell_angle_alpha   89.74537270
+_cell_angle_beta   89.92686605
+_cell_angle_gamma   89.55979895
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   CaNd2Ti2Mn2O12
+_chemical_formula_sum   'Ca1 Nd2 Ti2 Mn2 O12'
+_cell_volume   224.18715585
+_cell_formula_units_Z   1
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Ca  Ca0  1  0.99626500  0.96307100  0.24962300  1
+  Nd  Nd1  1  0.01012100  0.04271200  0.74984600  1
+  Nd  Nd2  1  0.51079500  0.45515400  0.25036900  1
+  Ti  Ti3  1  0.00662300  0.50870000  0.98389600  1
+  Ti  Ti4  1  0.50081200  0.98204700  0.51334600  1
+  Mn  Mn5  1  0.00379800  0.49807900  0.49936800  1
+  Mn  Mn6  1  0.50243300  0.99457000  0.00111600  1
+  O  O7  1  0.94126800  0.49328100  0.74666700  1
+  O  O8  1  0.77935500  0.21066400  0.03647500  1
+  O  O9  1  0.78843900  0.21646300  0.46383300  1
+  O  O10  1  0.71914000  0.72279600  0.04659100  1
+  O  O11  1  0.72280800  0.71786500  0.45466600  1
+  O  O12  1  0.56579700  0.98478100  0.75269500  1
+  O  O13  1  0.43494800  0.01242600  0.24627300  1
+  O  O14  1  0.27387200  0.27580200  0.52939500  1
+  O  O15  1  0.27503200  0.27373400  0.97167700  1
+  O  O16  1  0.20130700  0.79119100  0.52509800  1
+  O  O17  1  0.20719300  0.79717600  0.97512900  1
+  O  O18  1  0.07043400  0.50910600  0.25423100  1

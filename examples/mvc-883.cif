@@ -1,0 +1,52 @@
+# generated using pymatgen
+data_Sr2AlCrCu2O7
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   12.10403773
+_cell_length_b   12.10403773
+_cell_length_c   5.38426280
+_cell_angle_alpha   77.30273080
+_cell_angle_beta   77.30273080
+_cell_angle_gamma   143.13871251
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   Sr2AlCrCu2O7
+_chemical_formula_sum   'Sr4 Al2 Cr2 Cu4 O14'
+_cell_volume   340.13763338
+_cell_formula_units_Z   2
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Sr  Sr0  1  0.66146900  0.87218700  0.97280500  1
+  Sr  Sr1  1  0.33801500  0.12863700  0.00786300  1
+  Sr  Sr2  1  0.12863700  0.33801500  0.00786300  1
+  Sr  Sr3  1  0.87218700  0.66146900  0.97280500  1
+  Al  Al4  1  0.00216400  0.50297400  0.98679500  1
+  Al  Al5  1  0.50297400  0.00216400  0.98679500  1
+  Cr  Cr6  1  0.30959300  0.30959300  0.46660300  1
+  Cr  Cr7  1  0.67681200  0.67681200  0.60328300  1
+  Cu  Cu8  1  0.55475700  0.94384900  0.48759500  1
+  Cu  Cu9  1  0.44653300  0.06114300  0.48259900  1
+  Cu  Cu10  1  0.06114300  0.44653300  0.48259900  1
+  Cu  Cu11  1  0.94384900  0.55475700  0.48759500  1
+  O  O12  1  0.63735600  0.63735600  0.98162200  1
+  O  O13  1  0.36460100  0.36460100  0.78845400  1
+  O  O14  1  0.73106100  0.12418600  0.63117500  1
+  O  O15  1  0.26925000  0.87671500  0.98398500  1
+  O  O16  1  0.87671500  0.26925000  0.98398500  1
+  O  O17  1  0.12418600  0.73106100  0.63117500  1
+  O  O18  1  0.38388200  0.77349400  0.33257400  1
+  O  O19  1  0.61929700  0.23167900  0.98530400  1
+  O  O20  1  0.23167900  0.61929700  0.98530400  1
+  O  O21  1  0.77349400  0.38388200  0.33257400  1
+  O  O22  1  0.13135500  0.28272800  0.51498700  1
+  O  O23  1  0.86703800  0.72629900  0.41279500  1
+  O  O24  1  0.72629900  0.86703800  0.41279500  1
+  O  O25  1  0.28272800  0.13135500  0.51498700  1

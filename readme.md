@@ -13,6 +13,8 @@ Refer to the `download.txt` for additional guidance on downloading these dataset
 
 ## Step 2: Extract and Organize Datasets
 
+## Step 2: Extract and Organize Datasets
+
 Once downloaded, extract each dataset to the project directory under their respective names (`mp` and `mp_13`). Ensure they are placed according to the following structure:
 ```csharp
 ct-UAEs/
@@ -22,6 +24,8 @@ ct-UAEs/
 ├── ct/ # Main source code directory
 ├── mp/ # Extracted mp dataset
 ├── mp_13/ # Extracted mp_13 dataset
+├── examples/ # Example dataset folder
+├── run/ # Folder for shell scripts
 ├── ...
 └── download.txt
 ```
@@ -37,6 +41,9 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 
 pip install -r requirements.txt
 ```
+
+It may take 20min on a normal desktop computer.
+
 - **Begin model training**:execute the provided scripts to start training your models.
 
 ## How to Run
@@ -51,7 +58,10 @@ For single-task training, execute the following command:
 python train\\main.py --load mp_13 --file mp_13_1_f.csv
 ```
 Replace mp_13 with mp and file with mp_formation.csv if you prefer to use the mp dataset. The --file flag specifies the CSV file containing the dataset. Here, f represents the formation energy (f) property.
-
+### Expected Output:
+- **Training Process** : The script will train the model, displaying the loss and other performance metrics after each epoch.
+- **Validation** : Validation results are shown periodically to assess the model's generalization.
+- **Duration** : The training is expected to complete within one day.
 ### Multi-Task Training
 For multi-task training with different combinations of properties, execute the corresponding script. For example, for formation energy (f) and bandgap (b), use:
 ```bash
@@ -65,6 +75,28 @@ For all four properties (formation energy (f), bandgap (b), total energy (e), an
 ```bash 
 python train\\main_mt_4.py --load mp_13 --file mp_13_4_fbem.csv
 ```
+### Example Training
+To train using the example dataset provided in the examples folder, use the following command:
+```bash
+python train/main.py --load examples --file id_prop.csv
+```
+## Running Training Scripts with Shell Scripts
+All training commands can be executed using pre-defined shell scripts located in the run folder. For example:
+### For single-task training on the mp dataset:
+```bash
+bash run/run_main_mp.sh
+```
+### For multi-task training on the mp dataset:
+```bash
+bash run/run_main_mt_2_mp.sh
+bash run/run_main_mt_3_mp.sh
+bash run/run_main_mt_4_mp.sh
+```
+### To run the example dataset:
+```bash 
+bash run/run_main.sh
+```
+
 ## Universial Atomic Embeddings
 The ct-UAEs project focuses on leveraging advanced machine learning techniques, particularly deep learning, to develop embeddings that are valuable for materials science research. The core objective of the project is to create accurate and useful representations (embeddings) of chemical compounds using a dataset of materials properties, which can then be used in various predictive models in materials informatics.
 The embeddings themselves are stored in checkpoint files (.pth.tar), and extracting these embeddings involves loading specific layers from the trained models. Here's a guide on how to correctly load and utilize these model weights to obtain the embedding matrix:

@@ -23,7 +23,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 warnings.filterwarnings("ignore", category=UserWarning, module="pymatgen")
 
 parser = argparse.ArgumentParser(description='Crystal Graph Convolutional Neural Networks')
-parser.add_argument('--load', metavar='PATH', nargs='+', default=r'mp_13',
+parser.add_argument('--load', metavar='PATH', default=r'mp_13',
                     help='dataset options, started with the path to root dir, '
                          'then other options')
 parser.add_argument('--file',default='mp_13_3_fbe.csv')
@@ -44,9 +44,7 @@ parser.add_argument('-b', '--batch-size', default=128, type=int,
 parser.add_argument('--lr', '--learning-rate', default=0.006, type=float,
                     metavar='LR', help='initial learning rate (default: '
                                        '0.01)')
-parser.add_argument('--embedding_lr', '--embedding-learning-rate', default=0.00001, type=float,
-                    metavar='LR', help='initial embedding learning rate (default: '
-                                       '0.01)')
+
 parser.add_argument('--lr-milestones', default=20, nargs='+', type=int,
                     metavar='N', help='milestones for scheduler (default: '
                                       '[100])')
@@ -56,9 +54,6 @@ parser.add_argument('--weight-decay', '--wd', default=0.001, type=float,
                     metavar='W', help='weight decay (default: 0)')
 parser.add_argument('--print-freq', '-p', default=300, type=int,
                     metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--resume', default='', type=str, metavar='PATH',
-                    help='path to latest checkpoint (default: none)')
-parser.add_argument('--load_embedding_only', default=True)
 
 train_group = parser.add_mutually_exclusive_group()
 train_group.add_argument('--train-ratio', default=0.8, type=float, metavar='N',
@@ -181,36 +176,15 @@ def main():
 
     criterion = nn.MSELoss()
 
-    # 判断是否需要单独为embedding层和其他层设置不同的学习率
-    if args.load_embedding_only and args.resume:
-        # 分别获取embedding层和其他层的参数
-        embedding_params = list(model.atom_embed.parameters())
-        other_params = [param for name, param in model.named_parameters() if 'atom_embed' not in name]
-
-        if args.optim == 'SGD':
-            optimizer = optim.SGD([
-                {'params': embedding_params, 'lr': args.embedding_lr},  # 为embedding层设置一个学习率
-                {'params': other_params}  # 其他层使用默认的学习率
-            ], lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
-
-        elif args.optim == 'Adam':
-            optimizer = optim.Adam([
-                {'params': embedding_params, 'lr': args.embedding_lr},  # 为embedding层设置一个学习率
-                {'params': other_params}  # 其他层使用默认的学习率
-            ], lr=args.lr, weight_decay=args.weight_decay)
-
-        else:
-            raise NameError('Only SGD or Adam is allowed as --optim')
+    if args.optim == 'SGD':
+        optimizer = optim.SGD(model.parameters(), args.lr,
+                                momentum=args.momentum,
+                                weight_decay=args.weight_decay)
+    elif args.optim == 'Adam':
+        optimizer = optim.Adam(model.parameters(), args.lr,
+                                weight_decay=args.weight_decay)
     else:
-        if args.optim == 'SGD':
-            optimizer = optim.SGD(model.parameters(), args.lr,
-                                  momentum=args.momentum,
-                                  weight_decay=args.weight_decay)
-        elif args.optim == 'Adam':
-            optimizer = optim.Adam(model.parameters(), args.lr,
-                                   weight_decay=args.weight_decay)
-        else:
-            raise NameError('Only SGD or Adam is allowed as --optim')
+        raise NameError('Only SGD or Adam is allowed as --optim')
 
 
     scheduler = StepLR(optimizer, step_size=args.lr_milestones, gamma=0.5)
@@ -426,15 +400,6 @@ def validate(val_loader, model, criterion, normalizer1,normalizer2,normalizer3,t
         r22 = r2_score(target2.cpu().numpy(), normalizer2.denorm(output2.data.cpu()))
         r2_scores1.update(r21, target1.size(0))
         r2_scores2.update(r22, target2.size(0))
-        if test:
-            test_pred = normalizer.denorm(output.data.cpu())
-            test_target = target
-            test_preds += test_pred.view(-1).tolist()
-            test_targets += test_target.view(-1).tolist()
-            test_cif_ids += batch_cif_ids
-        if args.wandb:
-            wandb.log({'test_loss': _loss.item(), 'test_MAE': mae_error.item(),'test_r2':r2.item()})
-
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -455,30 +420,6 @@ def validate(val_loader, model, criterion, normalizer1,normalizer2,normalizer3,t
                      loss1=losses1,loss2=losses2 ,mae_errors1=mae_errors1, r21=r2_scores1,mae_errors2=mae_errors2, r22=r2_scores2)
                 )
             
-
-    if test:
-        star_label = '**'
-        import csv
-        with open('test_results.csv', 'w') as f:
-            writer = csv.writer(f)
-            for cif_id, target, pred in zip(test_cif_ids, test_targets,
-                                            test_preds):
-                writer.writerow((cif_id, target, pred))
-    else:
-        star_label = '*'
-    if args.task == 'regression':
-        print(' {star} MAE {mae_errors1.avg:.3f}\t'
-              'R2 {r21.avg:.3f} ' 'MAE {mae_errors2.avg:.3f}\t'
-              'R2 {r22.avg:.3f}'.format(star=star_label,
-                                       mae_errors1=mae_errors1, r21=r2_scores1,mae_errors2=mae_errors2, r22=r2_scores2))
-
-        return mae_errors1.avg,r2_scores1.avg,mae_errors2.avg,r2_scores2.avg
-
-    else:
-        print(' {star} AUC {auc.avg:.3f}'.format(star=star_label,
-                                                 auc=auc_scores))
-
-        return auc_scores.avg
 
 
 class Normalizer(object):

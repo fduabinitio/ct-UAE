@@ -23,7 +23,7 @@ print(os.getcwd())
 warnings.filterwarnings("ignore", category=UserWarning, module="pymatgen")
 
 parser = argparse.ArgumentParser(description='Crystal Graph Convolutional Neural Networks')
-parser.add_argument('--load', metavar='PATH', nargs='+', default=r'mp',
+parser.add_argument('--load', metavar='PATH', default=r'mp',
                     help='dataset options, started with the path to root dir, '
                          'then other options')
 parser.add_argument('--file',default='mp_band.csv')
@@ -44,9 +44,6 @@ parser.add_argument('-b', '--batch-size', default=128, type=int,
 parser.add_argument('--lr', '--learning-rate', default=0.0001, type=float,
                     metavar='LR', help='initial learning rate (default: '
                                        '0.01)')
-parser.add_argument('--embedding_lr', '--embedding-learning-rate', default=0.00001, type=float,
-                    metavar='LR', help='initial embedding learning rate (default: '
-                                       '0.01)')
 parser.add_argument('--lr-milestones', default=10, nargs='+', type=int,
                     metavar='N', help='milestones for scheduler (default: '
                                       '[100])')
@@ -56,9 +53,6 @@ parser.add_argument('--weight-decay', '--wd', default=0.001, type=float,
                     metavar='W', help='weight decay (default: 0)')
 parser.add_argument('--print-freq', '-p', default=50, type=int,
                     metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--resume', default='', type=str, metavar='PATH',
-                    help='path to latest checkpoint (default: none)')
-parser.add_argument('--load_embedding_only', default=True)
 train_group = parser.add_mutually_exclusive_group()
 train_group.add_argument('--train-ratio', default=0.8, type=float, metavar='N',
                     help='number of training data to be loaded (default none)')
@@ -134,7 +128,7 @@ def main():
     global args, best_mae_error,best_r2_score
     #print(args.load)
     # load data
-    dataset = CIFData(*args.load,file=args.file)
+    dataset = CIFData(args.load,file=args.file)
     collate_fn = collate_pool
     collate_fn_train=collate_pool_train
     train_loader, val_loader, test_loader = get_train_val_test_loader(
@@ -178,59 +172,17 @@ def main():
 
     criterion = nn.MSELoss()
 
-    # 判断是否需要单独为embedding层和其他层设置不同的学习率
-    if args.load_embedding_only and args.resume:
-        # 分别获取embedding层和其他层的参数
-        embedding_params = list(model.atom_embed.parameters())
-        other_params = [param for name, param in model.named_parameters() if 'atom_embed' not in name]
-
-        if args.optim == 'SGD':
-            optimizer = optim.SGD([
-                {'params': embedding_params, 'lr': args.embedding_lr},  # 为embedding层设置一个学习率
-                {'params': other_params}  # 其他层使用默认的学习率
-            ], lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
-
-        elif args.optim == 'Adam':
-            optimizer = optim.Adam([
-                {'params': embedding_params, 'lr': args.embedding_lr},  # 为embedding层设置一个学习率
-                {'params': other_params}  # 其他层使用默认的学习率
-            ], lr=args.lr, weight_decay=args.weight_decay)
-
-        else:
-            raise NameError('Only SGD or Adam is allowed as --optim')
+    
+    if args.optim == 'SGD':
+        optimizer = optim.SGD(model.parameters(), args.lr,
+                                momentum=args.momentum,
+                                weight_decay=args.weight_decay)
+    elif args.optim == 'Adam':
+        optimizer = optim.Adam(model.parameters(), args.lr,
+                                weight_decay=args.weight_decay)
     else:
-        if args.optim == 'SGD':
-            optimizer = optim.SGD(model.parameters(), args.lr,
-                                  momentum=args.momentum,
-                                  weight_decay=args.weight_decay)
-        elif args.optim == 'Adam':
-            optimizer = optim.Adam(model.parameters(), args.lr,
-                                   weight_decay=args.weight_decay)
-        else:
-            raise NameError('Only SGD or Adam is allowed as --optim')
+        raise NameError('Only SGD or Adam is allowed as --optim')
 
-    # optionally resume from a checkpoint
-    if args.resume:
-        if os.path.isfile(args.resume):
-            print("=> loading checkpoint '{}'".format(args.resume))
-            checkpoint = torch.load(args.resume)
-            if args.load_embedding_only:
-                embedding_state_dict = {name.replace('embedding.', ''): param for name, param in
-                                        checkpoint['state_dict'].items() if 'embedding' in name}
-                model.embedding.load_state_dict(embedding_state_dict)
-            else:
-                model.load_state_dict(checkpoint['state_dict'])
-                args.start_epoch = checkpoint['epoch']
-                best_mae_error = checkpoint['best_mae_error']
-                best_r2_score = checkpoint['best_r2_score']
-                optimizer.load_state_dict(checkpoint['optimizer'])
-                normalizer.load_state_dict(checkpoint['normalizer'])
-            print("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.resume, checkpoint['epoch']))
-        else:
-            print("=> no checkpoint found at '{}'".format(args.resume))
-    # scheduler = MultiStepLR(optimizer, milestones=args.lr_milestones,
-    #                         gamma=0.1)
     scheduler = StepLR(optimizer, step_size=args.lr_milestones, gamma=0.96)
 
     # scheduler = CosineAnnealingLR(optimizer, T_max=150)
@@ -437,15 +389,6 @@ def validate(val_loader, model, criterion, normalizer, test=False):
         mae_errors.update(mae_error, target.size(0))
         r2 = r2_score(target.cpu().numpy(), normalizer.denorm(output.data.cpu()))
         r2_scores.update(r2, target.size(0))
-        if test:
-            test_pred = normalizer.denorm(output.data.cpu())
-            test_target = target
-            test_preds += test_pred.view(-1).tolist()
-            test_targets += test_target.view(-1).tolist()
-            test_cif_ids += batch_cif_ids
-        if args.wandb:
-            wandb.log({'test_loss': _loss.item(), 'test_MAE': mae_error.item(),'test_r2':r2.item()})
-
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -473,28 +416,7 @@ def validate(val_loader, model, criterion, normalizer, test=False):
                     accu=accuracies, prec=precisions, recall=recalls,
                     f1=fscores, auc=auc_scores))
 
-    if test:
-        star_label = '**'
-        import csv
-        with open('test_results.csv', 'w') as f:
-            writer = csv.writer(f)
-            for cif_id, target, pred in zip(test_cif_ids, test_targets,
-                                            test_preds):
-                writer.writerow((cif_id, target, pred))
-    else:
-        star_label = '*'
-    if args.task == 'regression':
-        print(' {star} MAE {mae_errors.avg:.3f}\t'
-              'R2 {r2.avg:.3f}'.format(star=star_label,
-                                       mae_errors=mae_errors, r2=r2_scores))
 
-        return mae_errors.avg,r2_scores.avg
-
-    else:
-        print(' {star} AUC {auc.avg:.3f}'.format(star=star_label,
-                                                 auc=auc_scores))
-
-        return auc_scores.avg
 
 
 class Normalizer(object):
