@@ -1,0 +1,36 @@
+# generated using pymatgen
+data_Mg2FeN2
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   5.51015974
+_cell_length_b   5.51015974
+_cell_length_c   6.25901935
+_cell_angle_alpha   63.52887054
+_cell_angle_beta   63.52887054
+_cell_angle_gamma   46.07162893
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   Mg2FeN2
+_chemical_formula_sum   'Mg4 Fe2 N4'
+_cell_volume   119.73814062
+_cell_formula_units_Z   2
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Mg  Mg0  1  0.32272800  0.32272800  0.59201100  1
+  Mg  Mg1  1  0.67727200  0.67727200  0.40798900  1
+  Mg  Mg2  1  0.96824300  0.96824300  0.75309900  1
+  Mg  Mg3  1  0.03175700  0.03175700  0.24690100  1
+  Fe  Fe4  1  0.63130000  0.63130000  0.87455600  1
+  Fe  Fe5  1  0.36870000  0.36870000  0.12544400  1
+  N  N6  1  0.81978900  0.81978900  0.60613300  1
+  N  N7  1  0.18021100  0.18021100  0.39386700  1
+  N  N8  1  0.52289400  0.52289400  0.21133200  1
+  N  N9  1  0.47710600  0.47710600  0.78866800  1

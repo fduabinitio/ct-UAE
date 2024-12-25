@@ -1,0 +1,36 @@
+# generated using pymatgen
+data_Zn2FeN2
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   5.90129784
+_cell_length_b   5.90129784
+_cell_length_c   7.20375215
+_cell_angle_alpha   57.86542193
+_cell_angle_beta   57.86542193
+_cell_angle_gamma   36.92706588
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   Zn2FeN2
+_chemical_formula_sum   'Zn4 Fe2 N4'
+_cell_volume   124.79459738
+_cell_formula_units_Z   2
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Zn  Zn0  1  0.31155100  0.31155100  0.78414700  1
+  Zn  Zn1  1  0.68844900  0.68844900  0.21585300  1
+  Zn  Zn2  1  0.94465900  0.94465900  0.33726500  1
+  Zn  Zn3  1  0.05534100  0.05534100  0.66273500  1
+  Fe  Fe4  1  0.62801000  0.62801000  0.87268200  1
+  Fe  Fe5  1  0.37199000  0.37199000  0.12731800  1
+  N  N6  1  0.82670100  0.82670100  0.67186900  1
+  N  N7  1  0.17329900  0.17329900  0.32813100  1
+  N  N8  1  0.49153900  0.49153900  0.80939100  1
+  N  N9  1  0.50846100  0.50846100  0.19060900  1

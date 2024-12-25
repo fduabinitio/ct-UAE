@@ -1,0 +1,52 @@
+# generated using pymatgen
+data_CaTi5O7
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   5.20090376
+_cell_length_b   5.20090376
+_cell_length_c   17.82222900
+_cell_angle_alpha   90.00000000
+_cell_angle_beta   90.00000000
+_cell_angle_gamma   146.05241401
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   CaTi5O7
+_chemical_formula_sum   'Ca2 Ti10 O14'
+_cell_volume   269.21032711
+_cell_formula_units_Z   2
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Ca  Ca0  1  0.20800600  0.79199400  0.75000000  1
+  Ca  Ca1  1  0.79199400  0.20800600  0.25000000  1
+  Ti  Ti2  1  0.71545300  0.28454700  0.56903800  1
+  Ti  Ti3  1  0.53592500  0.46407500  0.14570000  1
+  Ti  Ti4  1  0.00000000  0.00000000  0.50000000  1
+  Ti  Ti5  1  0.00000000  0.00000000  0.00000000  1
+  Ti  Ti6  1  0.46407500  0.53592500  0.85430000  1
+  Ti  Ti7  1  0.28454700  0.71545300  0.43096200  1
+  Ti  Ti8  1  0.28454700  0.71545300  0.06903800  1
+  Ti  Ti9  1  0.71545300  0.28454700  0.93096200  1
+  Ti  Ti10  1  0.46407500  0.53592500  0.64570000  1
+  Ti  Ti11  1  0.53592500  0.46407500  0.35430000  1
+  O  O12  1  0.36289200  0.63710800  0.95683100  1
+  O  O13  1  0.63710800  0.36289200  0.04316900  1
+  O  O14  1  0.63710800  0.36289200  0.45683100  1
+  O  O15  1  0.36289200  0.63710800  0.54316900  1
+  O  O16  1  0.82434100  0.17565900  0.83156700  1
+  O  O17  1  0.17565900  0.82434100  0.16843300  1
+  O  O18  1  0.17565900  0.82434100  0.33156700  1
+  O  O19  1  0.82434100  0.17565900  0.66843300  1
+  O  O20  1  0.09657700  0.90342300  0.88598500  1
+  O  O21  1  0.90342300  0.09657700  0.11401500  1
+  O  O22  1  0.90342300  0.09657700  0.38598500  1
+  O  O23  1  0.09657700  0.90342300  0.61401500  1
+  O  O24  1  0.52843600  0.47156400  0.75000000  1
+  O  O25  1  0.47156400  0.52843600  0.25000000  1

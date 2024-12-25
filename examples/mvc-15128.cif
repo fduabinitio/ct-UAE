@@ -1,0 +1,42 @@
+# generated using pymatgen
+data_CaTiO2
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   9.23843780
+_cell_length_b   9.23843780
+_cell_length_c   9.86634256
+_cell_angle_alpha   58.52895055
+_cell_angle_beta   58.52895055
+_cell_angle_gamma   19.21413128
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   CaTiO2
+_chemical_formula_sum   'Ca4 Ti4 O8'
+_cell_volume   235.09163232
+_cell_formula_units_Z   4
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Ca  Ca0  1  0.65333700  0.65333700  0.34960500  1
+  Ca  Ca1  1  0.34666300  0.34666300  0.65039500  1
+  Ca  Ca2  1  0.01109700  0.01109700  0.24279800  1
+  Ca  Ca3  1  0.98890300  0.98890300  0.75720200  1
+  Ti  Ti4  1  0.30186700  0.30186700  0.02832500  1
+  Ti  Ti5  1  0.82056600  0.82056600  0.34337500  1
+  Ti  Ti6  1  0.17943400  0.17943400  0.65662500  1
+  Ti  Ti7  1  0.69813300  0.69813300  0.97167500  1
+  O  O8  1  0.18331100  0.18331100  0.85086400  1
+  O  O9  1  0.59361400  0.59361400  0.70465800  1
+  O  O10  1  0.40638600  0.40638600  0.29534200  1
+  O  O11  1  0.81668900  0.81668900  0.14913600  1
+  O  O12  1  0.83312100  0.83312100  0.85059300  1
+  O  O13  1  0.22278500  0.22278500  0.42339700  1
+  O  O14  1  0.16687900  0.16687900  0.14940700  1
+  O  O15  1  0.77721500  0.77721500  0.57660300  1
