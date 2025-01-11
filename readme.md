@@ -156,3 +156,8 @@ This project is licensed under the MIT License. -->
 ## Acknowledgments
 
 We acknowledge the contributors and datasets used in this project for their valuable contributions to scientific research.
+
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
